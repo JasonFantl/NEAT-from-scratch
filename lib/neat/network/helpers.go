@@ -1,4 +1,4 @@
-package neat
+package network
 
 import (
 	"io"

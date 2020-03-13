@@ -1,6 +1,9 @@
-package neat
+package network
 
-import "fmt"
+import (
+	"fmt"
+	"sort"
+)
 
 type evaluatedConnection struct {
 	In      *FullyConnectedNode //
@@ -72,12 +75,33 @@ func evalRecurseBack(node *FullyConnectedNode) float64 {
 	node.visted = true
 
 	evaluatedVal := 0.0
+	node.value = evaluatedVal
 
+	sortedConnections := make([]*evaluatedConnection, len(node.ConnectionsIn))
+	i := 0
 	for _, val := range node.ConnectionsIn {
+		sortedConnections[i] = val
+		i++
+	}
+
+	sort.Slice(sortedConnections, func(i, j int) bool {
+		if sortedConnections[i].In.ID > sortedConnections[j].In.ID {
+			return true
+		}
+		if sortedConnections[i].In.ID < sortedConnections[j].In.ID {
+			return false
+		}
+		//sorts by Innovation of in connection, then by out innovation
+		return sortedConnections[i].Out.ID > sortedConnections[j].Out.ID
+	})
+
+	for _, val := range sortedConnections {
 		if val.Enabled && !val.visted {
 			evaluatedVal += val.Weight * evalRecurseBack(val.In)
 		}
 	}
+
+	node.value = evaluatedVal
 
 	return evaluatedVal
 

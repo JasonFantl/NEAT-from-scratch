@@ -1,4 +1,4 @@
-package neat
+package network
 
 type InnovationGenerator struct {
 	value int

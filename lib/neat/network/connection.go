@@ -1,7 +1,7 @@
-package neat
+package network
 
 type Connection struct {
-	In         int //
+	In         int
 	Out        int
 	Weight     float64
 	Enabled    bool
@@ -12,7 +12,7 @@ func NewConnection(in int, out int, weight float64, inno int) Connection {
 	return Connection{in, out, weight, true, inno}
 }
 
-func (c Connection) getKey() Key {
+func (c Connection) GetKey() Key {
 	return Key{c.In, c.Out}
 }
 

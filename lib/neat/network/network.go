@@ -1,4 +1,4 @@
-package neat
+package network
 
 import (
 	"fmt"
@@ -41,7 +41,7 @@ func (g *Network) AddConnection(inNode int, outNode int, weight float64) Connect
 	}
 
 	newConnection := NewConnection(g.Nodes[inNode].ID, g.Nodes[outNode].ID, weight, g.ConnectionInnovation.get())
-	g.Connections[newConnection.getKey()] = newConnection
+	g.Connections[newConnection.GetKey()] = newConnection
 
 	return newConnection
 }
